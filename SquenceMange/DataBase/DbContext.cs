@@ -1,11 +1,13 @@
-﻿using SqlSugar;
+﻿using MySqlX.XDevAPI;
+using SqlSugar;
 using System.Configuration;
 
 namespace SquenceMange.DataBase
 {
     public class DbContext
     {
-        public static SqlSugarClient Instance => new SqlSugarClient(
+        private SqlSugarClient _client;
+        public  SqlSugarClient Instance => _client ??= new SqlSugarClient(
             new ConnectionConfig()
             {
                 ConnectionString = ConfigurationManager.ConnectionStrings["MySQL"].ConnectionString,
@@ -15,9 +17,10 @@ namespace SquenceMange.DataBase
             });
 
 
-        internal void Dispose()
+        public void Dispose() // 正确实现Dispose
         {
-            throw new NotImplementedException();
+            _client?.Close();  // 关闭连接
+            _client?.Dispose();
         }
     }
 }

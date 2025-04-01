@@ -42,8 +42,8 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60"/>
                 <DataGridTextColumn Header="料号" Binding="{Binding MaterialId}" Width="120"/>
-                <DataGridTextColumn Header="图纸" Binding="{Binding Picture}" Width="60"/>
-                <DataGridTextColumn Header="模板" Binding="{Binding Model}" Width="60"/>
+                <DataGridTextColumn Header="图纸" Binding="{Binding PictureAddress}" Width="60"/>
+                <DataGridTextColumn Header="模板" Binding="{Binding ModelName}" Width="60"/>
                 <DataGridCheckBoxColumn Header="已生成序列号" Binding="{Binding IsCreated}" Width="90"/>
                 <DataGridTextColumn Header="打印次数" Binding="{Binding PrintTimes}" Width="70"/>
                 <DataGridTextColumn Header="关联机型" Binding="{Binding ConnectMachine}" Width="70"/>

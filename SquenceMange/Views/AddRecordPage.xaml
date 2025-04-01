@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="clr-namespace:SquenceMange.ViewModels"
-      Title="新增标签" Height="600" Width="400">
+      Title="新增标签" Height="600" Width="500">
 
     <Grid Margin="20">
         <Grid.RowDefinitions>
@@ -17,37 +17,52 @@
                   Margin="0,0,0,20"/>
 
         <!-- 输入表单 -->
-        <StackPanel Grid.Row="1" Width="400">
-            <!-- MaterialId -->
-            <Label Content="料号：" />
-            <TextBox x:Name="txtMaterialId" MaxLength="255" 
-                    Tag="必填项" />
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <!-- MaterialId -->
+                <StackPanel Orientation="Horizontal" Margin="0,5">
+                    <Label Content="料号：" Width="80" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtMaterialId" MaxLength="200" 
+                           Width="300" Tag="必填项"/>
+                </StackPanel>
 
-            <!-- PictureAddress -->
-            <Label Content="图纸路径：" />
-            <TextBox x:Name="txtPicture" MaxLength="255"/>
+                <!-- PictureAddress -->
+                <StackPanel Orientation="Horizontal" Margin="0,5">
+                    <Label Content="图纸路径：" Width="80" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtPicture" MaxLength="200" Width="300"/>
+                </StackPanel>
 
-            <!-- ModelName -->
-            <Label Content="模板名称：" />
-            <TextBox x:Name="txtModel" MaxLength="50"/>
+                <!-- ModelName -->
+                <StackPanel Orientation="Horizontal" Margin="0,5">
+                    <Label Content="模板名称：" Width="80" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtModel" MaxLength="50" Width="300"/>
+                </StackPanel>
 
-            <!-- ConnectMachine -->
-            <Label Content="关联机型：" />
-            <TextBox x:Name="txtMachine" MaxLength="100"/>
+                <!-- ConnectMachine -->
+                <StackPanel Orientation="Horizontal" Margin="0,5">
+                    <Label Content="关联机型：" Width="80" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtMachine" MaxLength="100" Width="300"/>
+                </StackPanel>
 
-            <!-- Remark -->
-            <Label Content="备注：" />
-            <TextBox x:Name="txtRemark" MaxLength="255" 
-                    Height="60" AcceptsReturn="True"
-                    VerticalScrollBarVisibility="Auto"/>
+                <!-- Remark -->
+                <StackPanel Orientation="Horizontal" Margin="0,5">
+                    <Label Content="备注：" Width="80" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtRemark" MaxLength="255" 
+                           Height="80" Width="300"
+                           AcceptsReturn="True" 
+                           VerticalScrollBarVisibility="Auto"/>
+                </StackPanel>
 
-            <!-- 操作按钮 -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20" Width="212">
-                <Button Content="保存" Width="80" Margin="0,0,10,0" 
-                       Click="SaveButton_Click"/>
-                <Button Content="取消" Width="80" 
-                       Click="CancelButton_Click"/>
+                <!-- 操作按钮 -->
+                <StackPanel Orientation="Horizontal" 
+                          HorizontalAlignment="Center" 
+                          Margin="0,20">
+                    <Button Content="保存" Width="100" Height="28"
+                           Margin="0,0,10,0" Click="SaveButton_Click"/>
+                    <Button Content="取消" Width="100" Height="28"
+                           Click="CancelButton_Click"/>
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>

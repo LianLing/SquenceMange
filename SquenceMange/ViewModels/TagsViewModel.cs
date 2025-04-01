@@ -70,6 +70,7 @@ namespace SquenceMange.ViewModels
                 ConnectMachine = "Model-Y",
                 IsValid = 0
             });
+            FilteredTags.Refresh(); // 添加后刷新过滤视图
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

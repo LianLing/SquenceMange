@@ -25,6 +25,7 @@ namespace SquenceMange.Views
                     IsInitialized = true;
                 }
             };
+            DataContext = this;
         }
         private bool IsInitialized = false;
 
@@ -101,8 +102,8 @@ namespace SquenceMange.Views
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            var page = new SquenceMange.Views.AddRecordPage();
-            page.ShowsNavigationUI = true;
+            var addPage = new AddRecordPage();
+            this.NavigationService?.Navigate(addPage);
         }
 
 

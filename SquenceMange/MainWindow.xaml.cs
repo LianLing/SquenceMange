@@ -26,24 +26,26 @@ namespace SquenceMange.Views
         // 保存记录菜单点击事件
         private void SaveRecord_Click(object sender, RoutedEventArgs e)
         {
-            var page = new SquenceMange.Views.SaveRecordPage(); 
+            //var page = new SquenceMange.Views.SaveRecordPage(); 
 
-            var hostWindow = new Window
-            {
-                Title = "标签管理",
-                WindowState = WindowState.Maximized,          // 关键设置1：最大化窗口
-                //WindowStyle = WindowStyle.None,              // 关键设置2：隐藏标题栏
-                WindowStartupLocation = WindowStartupLocation.CenterScreen,
-                Content = page,
-                SizeToContent = SizeToContent.Manual,        // 关键设置3：禁用自动尺寸
-                //ResizeMode = ResizeMode.NoResize             // 禁止调整窗口大小
-            };
+            //var hostWindow = new Window
+            //{
+            //    Title = "标签管理",
+            //    WindowState = WindowState.Maximized,          // 关键设置1：最大化窗口
+            //    //WindowStyle = WindowStyle.None,              // 关键设置2：隐藏标题栏
+            //    WindowStartupLocation = WindowStartupLocation.CenterScreen,
+            //    Content = page,
+            //    SizeToContent = SizeToContent.Manual,        // 关键设置3：禁用自动尺寸
+            //    //ResizeMode = ResizeMode.NoResize             // 禁止调整窗口大小
+            //};
 
-            // 适配多显示器配置
-            hostWindow.Width = SystemParameters.VirtualScreenWidth;
-            hostWindow.Height = SystemParameters.VirtualScreenHeight;
+            //// 适配多显示器配置
+            //hostWindow.Width = SystemParameters.VirtualScreenWidth;
+            //hostWindow.Height = SystemParameters.VirtualScreenHeight;
 
-            hostWindow.ShowDialog();
+            //hostWindow.ShowDialog();
+
+            mainFrame.Navigate(new SaveRecordPage());
         }
 
         // 生成序列号菜单点击事件
