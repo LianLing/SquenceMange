@@ -37,16 +37,16 @@
                   AutoGenerateColumns="False"
                   CanUserAddRows="False"
                   IsReadOnly="True"
-                  ItemsSource="{Binding}">
+                  ItemsSource="{Binding TagsList}">
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60"/>
                 <DataGridTextColumn Header="料号" Binding="{Binding MaterialId}" Width="120"/>
-                <DataGridCheckBoxColumn Header="图纸" Binding="{Binding Picture}" Width="60"/>
-                <DataGridCheckBoxColumn Header="模板" Binding="{Binding Model}" Width="60"/>
+                <DataGridTextColumn Header="图纸" Binding="{Binding Picture}" Width="60"/>
+                <DataGridTextColumn Header="模板" Binding="{Binding Model}" Width="60"/>
                 <DataGridCheckBoxColumn Header="已生成序列号" Binding="{Binding IsCreated}" Width="90"/>
-                <DataGridCheckBoxColumn Header="打印次数" Binding="{Binding PrintTimes}" Width="70"/>
-                <DataGridCheckBoxColumn Header="关联机型" Binding="{Binding ConnectMachine}" Width="70"/>
+                <DataGridTextColumn Header="打印次数" Binding="{Binding PrintTimes}" Width="70"/>
+                <DataGridTextColumn Header="关联机型" Binding="{Binding ConnectMachine}" Width="70"/>
                 <DataGridTextColumn Header="创建人" Binding="{Binding Creater}" Width="100"/>
                 <DataGridTextColumn Header="创建时间" 
                    Binding="{Binding CreateTime, StringFormat=yyyy-MM-dd}" 

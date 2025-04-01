@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="MySql.Data" Version="9.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
     <PackageReference Include="SqlSugar" Version="5.1.4.187" />
   </ItemGroup>
 

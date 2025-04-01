@@ -7,7 +7,7 @@ namespace SquenceMange.Models
     /// 标签数据实体类
     /// </summary>
     [SugarTable("tags")]  // 映射数据库表
-    public class Tags
+    public class TagsModel
     {
         /// <summary>
         /// 主键ID（自增）
@@ -24,26 +24,26 @@ namespace SquenceMange.Models
         /// <summary>
         /// 图纸文件路径
         /// </summary>
-        [SugarColumn(ColumnName = "Picture", Length = 255)]
-        public string Picture { get; set; }
+        [SugarColumn(ColumnName = "PictureAddress", Length = 255)]
+        public string PictureAddress { get; set; }
 
         /// <summary>
         /// 模板名称（最大长度50）
         /// </summary>
-        [SugarColumn(ColumnName = "Model", Length = 50)]
-        public string Model { get; set; }
+        [SugarColumn(ColumnName = "ModelName", Length = 50)]
+        public string ModelName { get; set; }
 
         /// <summary>
         /// 生效状态（默认true）
         /// </summary>
         [SugarColumn(ColumnName = "IsValid")]
-        public bool IsValid { get; set; } = true;
+        public int IsValid { get; set; }
 
         /// <summary>
         /// 序列号生成状态
         /// </summary>
         [SugarColumn(ColumnName = "IsCreated")]
-        public bool IsCreated { get; set; }
+        public int IsCreated { get; set; }
 
         /// <summary>
         /// 打印次数统计（默认0）

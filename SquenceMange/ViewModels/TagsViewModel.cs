@@ -19,7 +19,7 @@ namespace SquenceMange.ViewModels
             }
         }
 
-        public ObservableCollection<Tags> TagsCollection { get; } = new ObservableCollection<Tags>();
+        public ObservableCollection<TagsModel> TagsCollection { get; } = new ObservableCollection<TagsModel>();
 
         private ICollectionView _filteredTags;
         public ICollectionView FilteredTags
@@ -41,7 +41,7 @@ namespace SquenceMange.ViewModels
 
         private bool FilterTags(object obj)
         {
-            if (obj is not Tags tag) return false;
+            if (obj is not TagsModel tag) return false;
 
             if (string.IsNullOrWhiteSpace(SearchText))
                 return true;
@@ -53,22 +53,22 @@ namespace SquenceMange.ViewModels
         private void LoadSampleData()
         {
             // 测试数据（实际应连接数据库）
-            TagsCollection.Add(new Tags
+            TagsCollection.Add(new TagsModel
             {
                 Id = 1,
                 MaterialId = "MAT-001",
                 Creater = "张三",
                 ConnectMachine = "Model-X",
-                IsValid = true
+                IsValid = 1
             });
 
-            TagsCollection.Add(new Tags
+            TagsCollection.Add(new TagsModel
             {
                 Id = 2,
                 MaterialId = "MAT-002",
                 Creater = "李四",
                 ConnectMachine = "Model-Y",
-                IsValid = false
+                IsValid = 0
             });
         }
 

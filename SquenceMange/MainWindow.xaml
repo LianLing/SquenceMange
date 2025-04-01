@@ -17,7 +17,8 @@
 
         <!-- 其他界面内容 -->
         <Grid>
-            <!-- 这里可以添加其他控件 -->
+            <Frame x:Name="mainFrame" x:FieldModifier="public" 
+       NavigationUIVisibility="Hidden"/>
         </Grid>
     </DockPanel>
 </Window>

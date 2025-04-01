@@ -13,5 +13,11 @@ namespace SquenceMange.DataBase
                 IsAutoCloseConnection = true,
                 InitKeyType = InitKeyType.Attribute
             });
+
+
+        internal void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,0 +1,53 @@
+﻿<Page x:Class="SquenceMange.Views.AddRecordPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:vm="clr-namespace:SquenceMange.ViewModels"
+      Title="新增标签" Height="600" Width="400">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- 标题 -->
+        <TextBlock Grid.Row="0" Text="新建标签记录" 
+                  FontSize="20" FontWeight="Bold"
+                  Margin="0,0,0,20"/>
+
+        <!-- 输入表单 -->
+        <StackPanel Grid.Row="1" Width="400">
+            <!-- MaterialId -->
+            <Label Content="料号：" />
+            <TextBox x:Name="txtMaterialId" MaxLength="255" 
+                    Tag="必填项" />
+
+            <!-- PictureAddress -->
+            <Label Content="图纸路径：" />
+            <TextBox x:Name="txtPicture" MaxLength="255"/>
+
+            <!-- ModelName -->
+            <Label Content="模板名称：" />
+            <TextBox x:Name="txtModel" MaxLength="50"/>
+
+            <!-- ConnectMachine -->
+            <Label Content="关联机型：" />
+            <TextBox x:Name="txtMachine" MaxLength="100"/>
+
+            <!-- Remark -->
+            <Label Content="备注：" />
+            <TextBox x:Name="txtRemark" MaxLength="255" 
+                    Height="60" AcceptsReturn="True"
+                    VerticalScrollBarVisibility="Auto"/>
+
+            <!-- 操作按钮 -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20" Width="212">
+                <Button Content="保存" Width="80" Margin="0,0,10,0" 
+                       Click="SaveButton_Click"/>
+                <Button Content="取消" Width="80" 
+                       Click="CancelButton_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

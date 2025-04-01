@@ -16,9 +16,11 @@ namespace SquenceMange.Views
     /// </summary>
     public partial class MainWindow : Window
     {
+        public Frame MainFrame => this.mainFrame;
         public MainWindow()
         {
             InitializeComponent();
+            
         }
 
         // 保存记录菜单点击事件
