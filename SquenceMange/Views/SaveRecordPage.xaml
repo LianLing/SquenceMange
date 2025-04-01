@@ -25,10 +25,11 @@
         </StackPanel>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="400,3,0,12">
-            <Button Content="查询" Width="80" Margin="5" Click="SearchButton_Click"/>
-            <Button Content="新增" Width="80" Margin="5" Click="AddButton_Click"/>
-            <Button Content="删除" Width="80" Margin="5" Click="DeleteButton_Click"/>
-            <Button Content="修改" Width="80" Margin="5" Click="EditButton_Click"/>
+            <Button Content="查询" Width="60" Margin="5" Click="SearchButton_Click"/>
+            <Button Content="新增" Width="60" Margin="5" Click="AddButton_Click"/>
+            <Button Content="删除" Width="60" Margin="5" Click="DeleteButton_Click"/>
+            <Button Content="修改" Width="60" Margin="5" Click="EditButton_Click"/>
+            <Button Content="保存" Width="60" Margin="5" Click="SaveButton_Click"/>
         </StackPanel>
 
         <!-- 数据表格 -->
@@ -37,11 +38,14 @@
                   AutoGenerateColumns="False"
                   CanUserAddRows="False"
                   IsReadOnly="True"
-                  ItemsSource="{Binding TagsList}">
+                  SelectionMode="Single"
+                  SelectionUnit="FullRow"
+                  ItemsSource="{Binding TagsList}"
+                  SelectedItem="{Binding TagsListSingle}">
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60"/>
-                <DataGridTextColumn Header="料号" Binding="{Binding MaterialId}" Width="120"/>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" IsReadOnly="True" Width="60"/>
+                <DataGridTextColumn Header="料号" Binding="{Binding MaterialId}" IsReadOnly="True" Width="120"/>
                 <DataGridTextColumn Header="图纸" Binding="{Binding PictureAddress}" Width="60"/>
                 <DataGridTextColumn Header="模板" Binding="{Binding ModelName}" Width="60"/>
                 <DataGridCheckBoxColumn Header="已生成序列号" Binding="{Binding IsCreated}" Width="90"/>

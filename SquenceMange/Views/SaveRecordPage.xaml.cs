@@ -5,12 +5,14 @@ using System.Collections.ObjectModel;
 using SquenceMange.Service;
 using SqlSugar;
 using SquenceMange.DataBase;
+using System.Windows.Threading;
 
 namespace SquenceMange.Views
 {
     public partial class SaveRecordPage : Page
     {
         private readonly TagService _tagService = new TagService();
+        private bool _isEditing = false;
         public ObservableCollection<TagsModel> TagsList { get; } = new ObservableCollection<TagsModel>();
 
         public SaveRecordPage()
@@ -109,7 +111,62 @@ namespace SquenceMange.Views
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
+            if (tagsDataGrid.SelectedItem == null)
+            {
+                MessageBox.Show("请先选择要编辑的记录");
+                return;
+            }
+            // 切换编辑状态
+            _isEditing = true;
 
+            // 启动编辑模式
+            tagsDataGrid.BeginEdit();
+
+            // 自动聚焦到第一个可编辑单元格
+            Dispatcher.BeginInvoke((Action)(() =>
+            {
+                var cellInfo = new DataGridCellInfo(
+                    tagsDataGrid.SelectedItem,
+                    tagsDataGrid.Columns[2]); // 聚焦到模板名称列
+                tagsDataGrid.CurrentCell = cellInfo;
+                tagsDataGrid.BeginEdit();
+            }), DispatcherPriority.Background);
+        }
+
+        private async void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // 提交所有未保存的编辑
+                tagsDataGrid.CommitEdit();
+
+                // 获取变更记录
+                var changedItems = TagsList
+                    .Where(t => t.IsModified)
+                    .ToList();
+
+                using (var service = new TagService())
+                {
+                    foreach (var item in changedItems)
+                    {
+                        // 重置修改标记
+                        item.IsModified = false;
+
+                        // 执行更新
+                        if (!service.UpdateTag(item))
+                        {
+                            MessageBox.Show($"更新记录ID:{item.Id}失败");
+                        }
+                    }
+                }
+
+                MessageBox.Show($"成功保存{changedItems.Count}条记录");
+                _isEditing = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"保存失败：{ex.Message}");
+            }
         }
     }
 }

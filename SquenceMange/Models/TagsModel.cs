@@ -1,5 +1,7 @@
 ﻿using SqlSugar;
 using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace SquenceMange.Models
 {
@@ -7,7 +9,7 @@ namespace SquenceMange.Models
     /// 标签数据实体类
     /// </summary>
     [SugarTable("tags")]  // 映射数据库表
-    public class TagsModel
+    public class TagsModel : INotifyPropertyChanged
     {
         /// <summary>
         /// 主键ID（自增）
@@ -18,8 +20,21 @@ namespace SquenceMange.Models
         /// <summary>
         /// 料号（唯一标识）
         /// </summary>
-        [SugarColumn(ColumnName = "MaterialId", Length = 50)]
-        public string MaterialId { get; set; }
+        private string _materialId;
+
+        [SugarColumn(IsOnlyIgnoreUpdate = true, ColumnDescription = "唯一料号", ColumnName = "MaterialId")]
+        public string MaterialId { 
+            get => _materialId; 
+            set 
+            {
+                if (_materialId != value)
+                {
+                    _materialId = value;
+                    IsModified = true;
+                    OnPropertyChanged();
+                }
+            } 
+        }
 
         /// <summary>
         /// 图纸文件路径
@@ -92,5 +107,15 @@ namespace SquenceMange.Models
         /// </summary>
         [SugarColumn(ColumnName = "ExtendValue", Length = 255)]
         public string ExtendValue { get; set; }
+
+        // 状态跟踪字段（不映射到数据库）
+        [SugarColumn(IsIgnore = true)]
+        public bool IsModified { get; set; }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
     }
 }

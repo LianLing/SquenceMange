@@ -1,4 +1,5 @@
-﻿using SqlSugar;
+﻿using System.Windows.Media.Media3D;
+using SqlSugar;
 using SquenceMange.DataBase;
 using SquenceMange.Models;
 
@@ -46,11 +47,21 @@ namespace SquenceMange.Service
         }
 
         // 检查料号是否存在的专用方法
+        //public bool MaterialIdExists(string materialId)
+        //{
+        //    return _db.Instance.Queryable<TagsModel>()
+        //        .Where(t => t.MaterialId == materialId)
+        //        .Any();
+        //}
         public bool MaterialIdExists(string materialId)
         {
-            return _db.Instance.Queryable<TagsModel>()
-                .Where(t => t.MaterialId == materialId)
-                .Any();
+            string sql = $@"select 1 from tags t where t.MaterialId = @MaterialId limit 1";
+            var result = _db.Instance.Ado.SqlQuerySingle<int>(sql,new { MaterialId = materialId });
+            if (result > 0)
+                return true;
+            else 
+                return false;
         }
+
     }
 }

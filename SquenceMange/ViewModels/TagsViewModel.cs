@@ -36,7 +36,6 @@ namespace SquenceMange.ViewModels
         {
             // 初始化过滤条件
             FilteredTags.Filter = FilterTags;
-            LoadSampleData();
         }
 
         private bool FilterTags(object obj)
@@ -50,28 +49,7 @@ namespace SquenceMange.ViewModels
                    (tag.Creater?.Contains(SearchText) ?? false);
         }
 
-        private void LoadSampleData()
-        {
-            // 测试数据（实际应连接数据库）
-            TagsCollection.Add(new TagsModel
-            {
-                Id = 1,
-                MaterialId = "MAT-001",
-                Creater = "张三",
-                ConnectMachine = "Model-X",
-                IsValid = 1
-            });
-
-            TagsCollection.Add(new TagsModel
-            {
-                Id = 2,
-                MaterialId = "MAT-002",
-                Creater = "李四",
-                ConnectMachine = "Model-Y",
-                IsValid = 0
-            });
-            FilteredTags.Refresh(); // 添加后刷新过滤视图
-        }
+        
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string name) =>

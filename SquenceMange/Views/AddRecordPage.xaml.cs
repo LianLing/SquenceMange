@@ -53,7 +53,7 @@ namespace SquenceMange.Views
                     EditTime = DateTime.Now
                 };
 
-                // 第四步：保存数据（数据库约束为最终保障）
+                // 第四步：保存数据
                 using (var service = new TagService())
                 {
                     if (service.InsertTag(newTag))
