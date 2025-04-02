@@ -63,5 +63,34 @@ namespace SquenceMange.Service
                 return false;
         }
 
+        public bool CheckRepeatMaterial(string materialId,int id)
+        {
+            string sql = $@"select 1 from tags t where t.MaterialId = @MaterialId and id = @Id limit 1";
+            var result = _db.Instance.Ado.SqlQuerySingle<int>(sql, new { MaterialId = materialId,Id = id });
+            if (result > 0)     //MaterialId未修改
+                return true;
+            else
+            {
+                string sql1 = $@"select 1 from tags t where t.MaterialId <> @MaterialId and id = @Id limit 1";
+                var result1 = _db.Instance.Ado.SqlQuerySingle<int>(sql1, new { MaterialId = materialId, Id = id });
+                if (result1 > 0)    //MaterialId修改了
+                {
+                    string sql2 = $@"select 1 from tags t where t.MaterialId = @MaterialId and id <> @Id limit 1";
+                    var result2 = _db.Instance.Ado.SqlQuerySingle<int>(sql2, new { MaterialId = materialId, Id = id });
+                    if (result2>0)  //MaterialId修改了,并且料号重复
+                    {
+                        return false;
+                    }else
+                    {
+                        return true;
+                    }
+                }
+                else
+                    return true;
+                
+            }
+              
+        }
+
     }
 }

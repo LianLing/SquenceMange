@@ -6,6 +6,7 @@ using SquenceMange.Service;
 using SqlSugar;
 using SquenceMange.DataBase;
 using System.Windows.Threading;
+using System.Windows.Media.Media3D;
 
 namespace SquenceMange.Views
 {
@@ -13,7 +14,8 @@ namespace SquenceMange.Views
     {
         private readonly TagService _tagService = new TagService();
         private bool _isEditing = false;
-        public ObservableCollection<TagsModel> TagsList { get; } = new ObservableCollection<TagsModel>();
+        public ObservableCollection<TagsModel> TagsList { get; set; } = new ObservableCollection<TagsModel>();
+        public TagsModel TagsListSingle { get; set; }
 
         public SaveRecordPage()
         {
@@ -141,26 +143,28 @@ namespace SquenceMange.Views
                 tagsDataGrid.CommitEdit();
 
                 // 获取变更记录
-                var changedItems = TagsList
-                    .Where(t => t.IsModified)
-                    .ToList();
+                var changedItem = TagsListSingle;
 
                 using (var service = new TagService())
                 {
-                    foreach (var item in changedItems)
+                    if (!service.CheckRepeatMaterial(changedItem.MaterialId, changedItem.Id))
                     {
-                        // 重置修改标记
-                        item.IsModified = false;
+                        MessageBox.Show($"料号 {changedItem.MaterialId} 已存在", "验证失败",
+                                      MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                    // 重置修改标记
+                    changedItem.IsModified = false;
 
                         // 执行更新
-                        if (!service.UpdateTag(item))
+                        if (!service.UpdateTag(changedItem))
                         {
-                            MessageBox.Show($"更新记录ID:{item.Id}失败");
+                            MessageBox.Show($"更新记录ID:{changedItem.Id}失败");
                         }
-                    }
+                    
                 }
 
-                MessageBox.Show($"成功保存{changedItems.Count}条记录");
+                MessageBox.Show($"成功保存1条记录");
                 _isEditing = false;
             }
             catch (Exception ex)
