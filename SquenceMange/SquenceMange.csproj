@@ -14,4 +14,10 @@
     <PackageReference Include="SqlSugar" Version="5.1.4.187" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Views\CreateSequencePage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>

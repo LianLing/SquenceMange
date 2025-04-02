@@ -19,6 +19,11 @@ namespace SquenceMange.Service
                 .ToList();
         }
 
+        public List<TagsModel> SearchAllTags()
+        {
+            return _db.Instance.Queryable<TagsModel>().ToList();
+        }
+
         public bool DeleteTag(int id)
         {
             return _db.Instance.Deleteable<TagsModel>(id).ExecuteCommand() > 0;

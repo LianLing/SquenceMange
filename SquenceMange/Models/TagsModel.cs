@@ -78,6 +78,25 @@ namespace SquenceMange.Models
         /// <summary>
         /// 生效状态（默认true）
         /// </summary>
+        private string _sequenceId;
+        [SugarColumn(ColumnName = "SequenceId")]
+        public string SequenceId
+        {
+            get => _sequenceId;
+            set
+            {
+                if (_sequenceId != value)
+                {
+                    _sequenceId = value;
+                    IsModified = true;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 生效状态（默认true）
+        /// </summary>
         private int _isValid;
         [SugarColumn(ColumnName = "IsValid")]
         public int IsValid

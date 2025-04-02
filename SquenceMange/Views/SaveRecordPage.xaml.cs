@@ -7,6 +7,7 @@ using SqlSugar;
 using SquenceMange.DataBase;
 using System.Windows.Threading;
 using System.Windows.Media.Media3D;
+using System.Windows.Navigation;
 
 namespace SquenceMange.Views
 {
@@ -56,6 +57,7 @@ namespace SquenceMange.Views
                     TagsList.Remove(selected);
                 }
             }
+            //LoadData();
         }
 
         private void ShowAsDialog()
@@ -107,6 +109,7 @@ namespace SquenceMange.Views
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             var addPage = new AddRecordPage();
+            addPage.SaveCompleted += () => LoadData();      //订阅新增成功事件
             this.NavigationService?.Navigate(addPage);
         }
 
@@ -151,6 +154,7 @@ namespace SquenceMange.Views
                     {
                         MessageBox.Show($"料号 {changedItem.MaterialId} 已存在", "验证失败",
                                       MessageBoxButton.OK, MessageBoxImage.Error);
+                        LoadData();
                         return;
                     }
                     // 重置修改标记
@@ -171,6 +175,7 @@ namespace SquenceMange.Views
             {
                 MessageBox.Show($"保存失败：{ex.Message}");
             }
+            LoadData();
         }
     }
 }

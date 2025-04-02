@@ -38,6 +38,12 @@
                     <TextBox x:Name="txtModel" MaxLength="50" Width="300"/>
                 </StackPanel>
 
+                <!-- SequenceId -->
+                <StackPanel Orientation="Horizontal" Margin="0,5">
+                    <Label Content="序列号：" Width="80" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtSequenceId" MaxLength="50" Width="300"/>
+                </StackPanel>
+                
                 <!-- ConnectMachine -->
                 <StackPanel Orientation="Horizontal" Margin="0,5">
                     <Label Content="关联机型：" Width="80" VerticalAlignment="Center"/>

@@ -9,7 +9,7 @@ namespace SquenceMange.Views
     public partial class AddRecordPage : Page
     {
         private readonly TagService _tagService = new TagService();
-
+        public event Action SaveCompleted;
         public AddRecordPage()
         {
             InitializeComponent();
@@ -46,6 +46,7 @@ namespace SquenceMange.Views
                     MaterialId = materialId,
                     PictureAddress = txtPicture.Text?.Trim(),
                     ModelName = txtModel.Text?.Trim(),
+                    SequenceId = txtSequenceId.Text?.Trim(),
                     ConnectMachine = txtMachine.Text?.Trim(),
                     Remark = txtRemark.Text?.Trim(),
                     IsValid = 1,
@@ -58,10 +59,12 @@ namespace SquenceMange.Views
                 {
                     if (service.InsertTag(newTag))
                     {
+                        SaveCompleted?.Invoke();
                         MessageBox.Show("添加成功", "提示",
                                       MessageBoxButton.OK, MessageBoxImage.Information);
                         NavigationService?.GoBack();
                     }
+                    
                 }
             }
             catch (Exception ex)
@@ -75,5 +78,6 @@ namespace SquenceMange.Views
         {
             NavigationService?.GoBack();
         }
+
     }
 }
