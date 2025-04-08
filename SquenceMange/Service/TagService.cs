@@ -15,18 +15,30 @@ namespace SquenceMange.Service
         public List<TagsModel> SearchTags(string keyword)
         {
             return _db.Instance.Queryable<TagsModel>()
-                .Where(t => t.MaterialId.Contains(keyword) || t.Creater.Contains(keyword))
+                .Where(t => t.BatchNo.Contains(keyword) || t.SequenceNoStart.Contains(keyword)).Where(p => p.IsValid == 1)
+                .ToList();
+        }
+
+        public List<TagsModel> SearchSequence(string keyword)
+        {
+            return _db.Instance.Queryable<TagsModel>()
+                .Where(t => t.MaterialId.Contains(keyword) || t.SequenceNoStart.Contains(keyword))
                 .ToList();
         }
 
         public List<TagsModel> SearchAllTags()
         {
-            return _db.Instance.Queryable<TagsModel>().ToList();
+            return _db.Instance.Queryable<TagsModel>().Where( p => p.IsValid == 1).ToList();
         }
 
         public bool DeleteTag(int id)
         {
-            return _db.Instance.Deleteable<TagsModel>(id).ExecuteCommand() > 0;
+            string sql = $@"update tags set isvalid = 0,EditTime = NOW() where id = @Id";
+            var result = _db.Instance.Ado.ExecuteCommand(sql, new {Id = id});
+            if (result > 0)
+                return true;
+            else 
+                return false;
         }
 
         public bool UpdateTag(TagsModel tag)
@@ -41,6 +53,7 @@ namespace SquenceMange.Service
             {
                 _db.Instance.Ado.BeginTran();
                 var result = _db.Instance.Insertable(tag).ExecuteCommand() > 0;
+               // _db.Instance.Insertable(sequence).ExecuteCommand();
                 _db.Instance.Ado.CommitTran();
                 return result;
             }
@@ -50,6 +63,8 @@ namespace SquenceMange.Service
                 throw;
             }
         }
+
+        
 
         // 检查料号是否存在的专用方法
         //public bool MaterialIdExists(string materialId)
@@ -95,6 +110,12 @@ namespace SquenceMange.Service
                 
             }
               
+        }
+
+        public TagsModel GetLatestData(TagsModel tagsModel)
+        {
+            string sql = $@"select t.* from tags t where t.MachineKind = @machineKind order by t.createtime desc limit 1";
+            return _db.Instance.Ado.SqlQuerySingle<TagsModel>(sql,new { machineKind  = tagsModel.MachineKind});
         }
 
     }

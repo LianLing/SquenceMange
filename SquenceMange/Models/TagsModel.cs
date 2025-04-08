@@ -18,11 +18,87 @@ namespace SquenceMange.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// 料号（唯一标识）
+        /// 机型
+        /// </summary>
+        private string _machineKind;
+        [SugarColumn(ColumnName = "MachineKind", Length = 255)]
+        public string MachineKind
+        {
+            get => _machineKind;
+            set
+            {
+                if (_machineKind != value)
+                {
+                    _machineKind = value;
+                    IsModified = true;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 生产批号
+        /// </summary>
+        private string _batchNo;
+        [SugarColumn(ColumnName = "BatchNo", Length = 255)]
+        public string BatchNo
+        {
+            get => _batchNo;
+            set
+            {
+                if (_batchNo != value)
+                {
+                    _batchNo = value;
+                    IsModified = true;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 批量
+        /// </summary>
+        private string _batchCount;
+        [SugarColumn(ColumnName = "BatchCount", Length = 255)]
+        public string BatchCount
+        {
+            get => _batchCount;
+            set
+            {
+                if (_batchCount != value)
+                {
+                    _batchCount = value;
+                    IsModified = true;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 版本
+        /// </summary>
+        private string _version;
+        [SugarColumn(ColumnName = "Version", Length = 255)]
+        public string Version
+        {
+            get => _version;
+            set
+            {
+                if (_version != value)
+                {
+                    _version = value;
+                    IsModified = true;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 料号
         /// </summary>
         private string _materialId;
 
-        [SugarColumn( ColumnDescription = "唯一料号", ColumnName = "MaterialId")]
+        [SugarColumn(ColumnDescription = "唯一料号", ColumnName = "MaterialId")]
         public string MaterialId
         {
             get => _materialId;
@@ -38,18 +114,18 @@ namespace SquenceMange.Models
         }
 
         /// <summary>
-        /// 图纸文件路径
+        /// 生产编号开始
         /// </summary>
-        private string _pictureAddress;
-        [SugarColumn(ColumnName = "PictureAddress", Length = 255)]
-        public string PictureAddress
+        private string _sequenceNoStart;
+        [SugarColumn(ColumnName = "SequenceNoStart", Length = 255)]
+        public string SequenceNoStart
         {
-            get => _pictureAddress;
+            get => _sequenceNoStart;
             set
             {
-                if (_pictureAddress != value)
+                if (_sequenceNoStart != value)
                 {
-                    _pictureAddress = value;
+                    _sequenceNoStart = value;
                     IsModified = true;
                     OnPropertyChanged();
                 }
@@ -57,18 +133,18 @@ namespace SquenceMange.Models
         }
 
         /// <summary>
-        /// 模板名称（最大长度50）
+        /// 生产编号结束
         /// </summary>
-        private string _modelName;
-        [SugarColumn(ColumnName = "ModelName", Length = 50)]
-        public string ModelName
+        private string _sequenceNoEnd;
+        [SugarColumn(ColumnName = "SequenceNoEnd", Length = 255)]
+        public string SequenceNoEnd
         {
-            get => _modelName;
+            get => _sequenceNoEnd;
             set
             {
-                if (_modelName != value)
+                if (_sequenceNoEnd != value)
                 {
-                    _modelName = value;
+                    _sequenceNoEnd = value;
                     IsModified = true;
                     OnPropertyChanged();
                 }
@@ -76,23 +152,24 @@ namespace SquenceMange.Models
         }
 
         /// <summary>
-        /// 生效状态（默认true）
+        /// 模板路径（最大长度50）
         /// </summary>
-        private string _sequenceId;
-        [SugarColumn(ColumnName = "SequenceId")]
-        public string SequenceId
+        private string _modelAddress;
+        [SugarColumn(ColumnName = "ModelAddress", Length = 50)]
+        public string ModelAddress
         {
-            get => _sequenceId;
+            get => _modelAddress;
             set
             {
-                if (_sequenceId != value)
+                if (_modelAddress != value)
                 {
-                    _sequenceId = value;
+                    _modelAddress = value;
                     IsModified = true;
                     OnPropertyChanged();
                 }
             }
         }
+
 
         /// <summary>
         /// 生效状态（默认true）
@@ -132,24 +209,6 @@ namespace SquenceMange.Models
             }
         }
 
-        /// <summary>
-        /// 打印次数统计（默认0）
-        /// </summary>
-        private int _printTimes = 0;
-        [SugarColumn(ColumnName = "PrintTimes")]
-        public int PrintTimes
-        {
-            get => _printTimes;
-            set
-            {
-                if (_printTimes != value)
-                {
-                    _printTimes = value;
-                    IsModified = true;
-                    OnPropertyChanged();
-                }
-            }
-        }
 
         /// <summary>
         /// 关联机型（最大长度100）

@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using SquenceMange.Models;
 using SquenceMange.Service;
 using SqlSugar;
+using Microsoft.Win32;
 
 namespace SquenceMange.Views
 {
@@ -10,6 +11,11 @@ namespace SquenceMange.Views
     {
         private readonly TagService _tagService = new TagService();
         public event Action SaveCompleted;
+        // 文件类型过滤器
+        private const string ImageFilter =
+            "图像文件|*.jpg;*.jpeg;*.png;*.bmp|所有文件|*.*";
+        private const string TemplateFilter =
+            "模板文件|*.qdf;*.tpl;*.template|所有文件|*.*";
         public AddRecordPage()
         {
             InitializeComponent();
@@ -19,6 +25,12 @@ namespace SquenceMange.Views
         {
             try
             {
+                //if (!System.IO.File.Exists(txtPicture.Text))
+                //{
+                //    MessageBox.Show("图纸文件不存在！");
+                //    return;
+                //}
+
                 // 第一步：前端验证必填字段
                 if (string.IsNullOrWhiteSpace(txtMaterialId.Text))
                 {
@@ -26,6 +38,14 @@ namespace SquenceMange.Views
                                   MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
+
+                ////检查序列号格式
+                //if (!txtSequenceNo.Text.Contains('-'))
+                //{
+                //    MessageBox.Show("序列号格式不正确", "序列号错误",
+                //                  MessageBoxButton.OK, MessageBoxImage.Warning);
+                //    return;
+                //}
 
                 string materialId = txtMaterialId.Text.Trim();
 
@@ -40,19 +60,43 @@ namespace SquenceMange.Views
                     }
                 }
 
+                //string[] sequenceStr = txtSequenceNo.Text.Split('-');
+                //string sequenceText = string.Empty;
+                //foreach (var p in sequenceStr)
+                //{
+                //    sequenceText += p;
+                //}
+
                 // 第三步：构建实体
                 var newTag = new TagsModel
                 {
+                    MachineKind = txtMachineKind.Text?.Trim(),
+                    BatchNo = txtBatchNo.Text?.Trim(),
+                    BatchCount = txtBatchCount.Text?.Trim(),
+                    Version = txtVersion.Text?.Trim(),
                     MaterialId = materialId,
-                    PictureAddress = txtPicture.Text?.Trim(),
-                    ModelName = txtModel.Text?.Trim(),
-                    SequenceId = txtSequenceId.Text?.Trim(),
-                    ConnectMachine = txtMachine.Text?.Trim(),
+                    SequenceNoStart = txtSequenceNoStart.Text?.Trim(),
+                    SequenceNoEnd = txtSequenceNoEnd.Text?.Trim(),
+                    ModelAddress = txtModelAddress.Text?.Trim(),
+                    ConnectMachine = txtConnectMachine.Text?.Trim(),
                     Remark = txtRemark.Text?.Trim(),
                     IsValid = 1,
+                    IsCreated = IsCreated.IsChecked == true ? 1 : 0,
+                    Creater = txtCreater.Text?.Trim(),
                     CreateTime = DateTime.Now,
                     EditTime = DateTime.Now
                 };
+
+                //var newSequence = new SequenceModel
+                //{
+                //    SequenceNo = txtSequenceNo.Text?.Trim(),
+                //    UpdateRate = txtUpdateRate.Text?.Trim(),
+                //    NumberIsEnd = NumberIsEnd.IsChecked == true ? 1 : 0,
+                //    Remark = txtRemark.Text?.Trim(),
+                //    CreateTime = DateTime.Now,
+                //    EditTime = DateTime.Now,
+                //    isValid = 1
+                //};
 
                 // 第四步：保存数据
                 using (var service = new TagService())
@@ -77,6 +121,38 @@ namespace SquenceMange.Views
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService?.GoBack();
+        }
+
+        
+
+        //private void BrowsePicture_Click(object sender, RoutedEventArgs e)
+        //{
+        //    var dialog = new OpenFileDialog
+        //    {
+        //        Title = "选择图纸文件",
+        //        Filter = ImageFilter,
+        //        CheckFileExists = true
+        //    };
+
+        //    if (dialog.ShowDialog() == true)
+        //    {
+        //        txtPicture.Text = dialog.FileName;
+        //    }
+        //}
+
+        private void BrowseModel_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new OpenFileDialog
+            {
+                Title = "选择模板文件",
+                Filter = TemplateFilter,
+                CheckFileExists = true
+            };
+
+            if (dialog.ShowDialog() == true)
+            {
+                txtModelAddress.Text = dialog.FileName;
+            }
         }
 
     }

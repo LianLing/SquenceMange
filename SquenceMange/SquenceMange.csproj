@@ -6,12 +6,37 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>logo2.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\logo1.ico" />
+    <None Remove="Assets\logo2.ico" />
+    <None Remove="Assets\logo3.ico" />
+    <None Remove="Assets\logo4.ico" />
+    <None Remove="Assets\logo5.ico" />
+    <None Remove="Assets\logo6.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="logo2.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MySql.Data" Version="9.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
     <PackageReference Include="SqlSugar" Version="5.1.4.187" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\logo1.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\logo2.ico" />
+    <Resource Include="Assets\logo3.ico" />
+    <Resource Include="Assets\logo4.ico" />
+    <Resource Include="Assets\logo5.ico" />
+    <Resource Include="Assets\logo6.ico" />
   </ItemGroup>
 
   <ItemGroup>

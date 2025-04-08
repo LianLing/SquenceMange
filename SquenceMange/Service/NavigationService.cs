@@ -6,7 +6,6 @@ namespace SquenceMange.Service
     {
         private Frame _frame;
 
-        // 删除带参数的构造函数
         public NavigationService() { }
 
         public void Initialize(Frame frame)

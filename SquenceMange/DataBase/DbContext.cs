@@ -4,7 +4,7 @@ using System.Configuration;
 
 namespace SquenceMange.DataBase
 {
-    public class DbContext
+    public class DbContext :IDisposable
     {
         private SqlSugarClient _client;
         public  SqlSugarClient Instance => _client ??= new SqlSugarClient(
@@ -17,7 +17,7 @@ namespace SquenceMange.DataBase
             });
 
 
-        public void Dispose() // 正确实现Dispose
+        public void Dispose() 
         {
             _client?.Close();  // 关闭连接
             _client?.Dispose();

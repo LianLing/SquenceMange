@@ -11,15 +11,14 @@ using System.Windows.Navigation;
 
 namespace SquenceMange.Views
 {
-    public partial class SaveRecordPage : Page
+    public partial class CreateSequencePage : Page
     {
-        private readonly TagService _tagService = new TagService();
+        private readonly SequenceService sequenceService = new SequenceService();
         private bool _isEditing = false;
         public ObservableCollection<TagsModel> TagsList { get; set; } = new ObservableCollection<TagsModel>();
-        public ObservableCollection<TagsModel> TagsLatestList { get; set; } = new ObservableCollection<TagsModel>();
         public TagsModel TagsListSingle { get; set; }
 
-        public SaveRecordPage()
+        public CreateSequencePage()
         {
             InitializeComponent();
             Loaded += (s, e) =>
@@ -32,13 +31,17 @@ namespace SquenceMange.Views
                 }
             };
             DataContext = this;
+            //if (!string.IsNullOrEmpty(TagsListSingle.SequenceNo))
+            //{
+            //    //ToDO:如果所选项存在初始序列号，显示到文本框中
+            //}
         }
         private bool IsInitialized = false;
 
         private void LoadData(string keyword = "")
         {
             TagsList.Clear();
-            foreach (var tag in _tagService.SearchTags(keyword))
+            foreach (var tag in sequenceService.SearchTags(keyword))
             {
                 TagsList.Add(tag);
             }
@@ -53,12 +56,11 @@ namespace SquenceMange.Views
         {
             if (tagsDataGrid.SelectedItem is TagsModel selected && selected.Id > 0)
             {
-                if (_tagService.DeleteTag(selected.Id))
+                if (sequenceService.DeleteTag(selected.Id))
                 {
                     TagsList.Remove(selected);
                 }
             }
-            //LoadData();
         }
 
         private void ShowAsDialog()
@@ -78,10 +80,10 @@ namespace SquenceMange.Views
                 // 从TextBox获取搜索条件
                 string searchKeyword = searchBox.Text.Trim();
 
-                using (var tagService = new TagService())
+                using (var sequenceService = new SequenceService())
                 {
                     // 执行模糊查询（匹配料号或创建人）
-                    var results = tagService.SearchTags(searchKeyword);
+                    var results = sequenceService.SearchSequence(searchKeyword);
 
                     // 清空现有数据
                     TagsList.Clear();
@@ -91,6 +93,7 @@ namespace SquenceMange.Views
                     {
                         TagsList.Add(tag);
                     }
+
                     // 如果没有结果提示
                     if (!results.Any())
                     {
@@ -178,13 +181,22 @@ namespace SquenceMange.Views
             LoadData();
         }
 
-        private void ShowLatestData(object sender, SelectionChangedEventArgs e)
+        private void CreateButton_Click(object sender, RoutedEventArgs e)
         {
-            var result = _tagService.GetLatestData(TagsListSingle);
-            if (!TagsLatestList.Any(p=>p.Id.Equals(result.Id)))
-            {
-                TagsLatestList.Add(result);
-            }
+
         }
+
+        //private void CreateButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    int count = Convert.ToInt32(txt_quality.Text.Trim());
+        //    List<TagsModel> SequenceList = new List<TagsModel>();
+        //    string sequenceText = text1.Text + '-' + text2.Text + '-' + text3.Text + '-';
+        //    //string[] arrText = sequenceText.Split(new char[] { '-'});
+        //    for (int i = 0; i < count; i++)
+        //    {
+        //        SequenceList[i].SequenceNo = sequenceText + (Convert.ToInt32(text4.Text) + i).ToString();
+        //    }
+        //   // sequenceService.InsertSequences()
+        //}
     }
 }
