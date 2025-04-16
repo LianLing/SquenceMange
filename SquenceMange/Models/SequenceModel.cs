@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SqlSugar;
 
-namespace SquenceMange.Models
+namespace SequenceMange.Models
 {
     [SugarTable("sequence")]
     public class SequenceModel : INotifyPropertyChanged

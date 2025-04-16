@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace SquenceMange.Models
+namespace SequenceMange.Models
 {
     /// <summary>
     /// 标签数据实体类
@@ -98,7 +98,7 @@ namespace SquenceMange.Models
         /// </summary>
         private string _materialId;
 
-        [SugarColumn(ColumnDescription = "唯一料号", ColumnName = "MaterialId")]
+        [SugarColumn( ColumnName = "MaterialId")]
         public string MaterialId
         {
             get => _materialId;

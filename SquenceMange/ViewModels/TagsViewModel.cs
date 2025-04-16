@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Collections.ObjectModel;
-using SquenceMange.Models;
+using SequenceMange.Models;
 using System.Windows.Data;
 
-namespace SquenceMange.ViewModels
+namespace SequenceMange.ViewModels
 {
     public class TagsViewModel : INotifyPropertyChanged
     {

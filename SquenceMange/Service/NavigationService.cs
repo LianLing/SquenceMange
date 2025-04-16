@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace SquenceMange.Service
+namespace SequenceMange.Service
 {
     public class NavigationService
     {

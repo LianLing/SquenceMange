@@ -1,15 +1,15 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using SquenceMange.Models;
+using SequenceMange.Models;
 using System.Collections.ObjectModel;
-using SquenceMange.Service;
+using SequenceMange.Service;
 using SqlSugar;
-using SquenceMange.DataBase;
+using SequenceMange.DataBase;
 using System.Windows.Threading;
 using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 
-namespace SquenceMange.Views
+namespace SequenceMange.Views
 {
     public partial class SaveRecordPage : Page
     {
@@ -80,7 +80,7 @@ namespace SquenceMange.Views
 
                 using (var tagService = new TagService())
                 {
-                    // 执行模糊查询（匹配料号或创建人）
+                    // 执行模糊查询（匹配批号或序列号）
                     var results = tagService.SearchTags(searchKeyword);
 
                     // 清空现有数据
@@ -150,9 +150,9 @@ namespace SquenceMange.Views
 
                 using (var service = new TagService())
                 {
-                    if (!service.CheckRepeatMaterial(changedItem.MaterialId, changedItem.Id))
+                    if (!service.CheckRepeatSequenceNoStart(changedItem.SequenceNoStart, changedItem.Id))
                     {
-                        MessageBox.Show($"料号 {changedItem.MaterialId} 已存在", "验证失败",
+                        MessageBox.Show($"序列号 {changedItem.MaterialId} 已存在", "验证失败",
                                       MessageBoxButton.OK, MessageBoxImage.Error);
                         LoadData();
                         return;
@@ -180,9 +180,16 @@ namespace SquenceMange.Views
 
         private void ShowLatestData(object sender, SelectionChangedEventArgs e)
         {
+            if (TagsListSingle == null)
+            {
+                TagsLatestList.Clear();
+                return;
+            }
             var result = _tagService.GetLatestData(TagsListSingle);
             if (!TagsLatestList.Any(p=>p.Id.Equals(result.Id)))
             {
+                TagsLatestList.Clear();
+
                 TagsLatestList.Add(result);
             }
         }

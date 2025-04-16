@@ -2,7 +2,7 @@
 using SqlSugar;
 using System.Configuration;
 
-namespace SquenceMange.DataBase
+namespace SequenceMange.DataBase
 {
     public class DbContext :IDisposable
     {

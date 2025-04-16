@@ -1,7 +1,7 @@
-﻿<Application x:Class="SquenceMange.App"
+﻿<Application x:Class="SequenceMange.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:SquenceMange"
+             xmlns:local="clr-namespace:SequenceMange"
              ShutdownMode="OnMainWindowClose"
              StartupUri="MainWindow.xaml">
     <Application.Resources>

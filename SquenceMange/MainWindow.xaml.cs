@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SquenceMange.Views
+namespace SequenceMange.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -27,7 +27,7 @@ namespace SquenceMange.Views
         // 保存记录菜单点击事件
         private void SaveRecord_Click(object sender, RoutedEventArgs e)
         {
-            //var page = new SquenceMange.Views.SaveRecordPage();
+            //var page = new SequenceMange.Views.SaveRecordPage();
 
             //OpenPage(page);
             WindowState = WindowState.Maximized;          // 最大化窗口
@@ -37,7 +37,7 @@ namespace SquenceMange.Views
         // 生成序列号菜单点击事件
         private void GenerateSerialNumber_Click(object sender, RoutedEventArgs e)
         {
-            //var page = new SquenceMange.Views.CreateSequencePage();
+            //var page = new SequenceMange.Views.CreateSequencePage();
 
             //OpenPage(page);
             WindowState = WindowState.Maximized;          // 最大化窗口

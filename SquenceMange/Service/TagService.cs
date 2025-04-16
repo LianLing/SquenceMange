@@ -1,9 +1,9 @@
 ﻿using System.Windows.Media.Media3D;
 using SqlSugar;
-using SquenceMange.DataBase;
-using SquenceMange.Models;
+using SequenceMange.DataBase;
+using SequenceMange.Models;
 
-namespace SquenceMange.Service
+namespace SequenceMange.Service
 {
     public class TagService:IDisposable
     {
@@ -73,31 +73,31 @@ namespace SquenceMange.Service
         //        .Where(t => t.MaterialId == materialId)
         //        .Any();
         //}
-        public bool MaterialIdExists(string materialId)
+        public bool SequenceExists(string sequenceNo)
         {
-            string sql = $@"select 1 from tags t where t.MaterialId = @MaterialId limit 1";
-            var result = _db.Instance.Ado.SqlQuerySingle<int>(sql,new { MaterialId = materialId });
+            string sql = $@"select 1 from tags t where t.SequenceNoStart = @SequenceNoStart and t.isvalid = 1 limit 1";
+            var result = _db.Instance.Ado.SqlQuerySingle<int>(sql,new { SequenceNoStart = sequenceNo });
             if (result > 0)
                 return true;
             else 
                 return false;
         }
 
-        public bool CheckRepeatMaterial(string materialId,int id)
+        public bool CheckRepeatSequenceNoStart(string sequenceNoStart, int id)
         {
-            string sql = $@"select 1 from tags t where t.MaterialId = @MaterialId and id = @Id limit 1";
-            var result = _db.Instance.Ado.SqlQuerySingle<int>(sql, new { MaterialId = materialId,Id = id });
-            if (result > 0)     //MaterialId未修改
+            string sql = $@"select 1 from tags t where t.SequenceNoStart = @SequenceNoStart and id = @Id limit 1";
+            var result = _db.Instance.Ado.SqlQuerySingle<int>(sql, new { SequenceNoStart = sequenceNoStart, Id = id });
+            if (result > 0)     //SequenceNoStart未修改
                 return true;
             else
             {
-                string sql1 = $@"select 1 from tags t where t.MaterialId <> @MaterialId and id = @Id limit 1";
-                var result1 = _db.Instance.Ado.SqlQuerySingle<int>(sql1, new { MaterialId = materialId, Id = id });
-                if (result1 > 0)    //MaterialId修改了
+                string sql1 = $@"select 1 from tags t where t.SequenceNoStart <> @SequenceNoStart and id = @Id limit 1";
+                var result1 = _db.Instance.Ado.SqlQuerySingle<int>(sql1, new { SequenceNoStart = sequenceNoStart, Id = id });
+                if (result1 > 0)    //SequenceNoStart修改了
                 {
-                    string sql2 = $@"select 1 from tags t where t.MaterialId = @MaterialId and id <> @Id limit 1";
-                    var result2 = _db.Instance.Ado.SqlQuerySingle<int>(sql2, new { MaterialId = materialId, Id = id });
-                    if (result2>0)  //MaterialId修改了,并且料号重复
+                    string sql2 = $@"select 1 from tags t where t.SequenceNoStart = @SequenceNoStart and id <> @Id limit 1";
+                    var result2 = _db.Instance.Ado.SqlQuerySingle<int>(sql2, new { SequenceNoStart = sequenceNoStart, Id = id });
+                    if (result2>0)  //SequenceNoStart修改了,并且重复
                     {
                         return false;
                     }else
@@ -114,8 +114,16 @@ namespace SquenceMange.Service
 
         public TagsModel GetLatestData(TagsModel tagsModel)
         {
-            string sql = $@"select t.* from tags t where t.MachineKind = @machineKind order by t.createtime desc limit 1";
-            return _db.Instance.Ado.SqlQuerySingle<TagsModel>(sql,new { machineKind  = tagsModel.MachineKind});
+            if (!string.IsNullOrEmpty(tagsModel.MachineKind))
+            {
+                string sql = $@"select t.* from tags t where t.MachineKind = @machineKind order by t.createtime desc limit 1";
+                return _db.Instance.Ado.SqlQuerySingle<TagsModel>(sql, new { machineKind = tagsModel.MachineKind });
+            }
+            else
+            {
+                return null;
+            }
+            
         }
 
     }

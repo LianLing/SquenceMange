@@ -1,8 +1,8 @@
-﻿<Page x:Class="SquenceMange.Views.AddRecordPage"
+﻿<Page x:Class="SequenceMange.Views.AddRecordPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:vm="clr-namespace:SquenceMange.ViewModels"
+      xmlns:vm="clr-namespace:SequenceMange.ViewModels"
       Title="新增标签" Height="600" Width="500">
 
     <Grid Margin="20">

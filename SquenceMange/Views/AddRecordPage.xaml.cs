@@ -1,11 +1,11 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using SquenceMange.Models;
-using SquenceMange.Service;
+using SequenceMange.Models;
+using SequenceMange.Service;
 using SqlSugar;
 using Microsoft.Win32;
 
-namespace SquenceMange.Views
+namespace SequenceMange.Views
 {
     public partial class AddRecordPage : Page
     {
@@ -38,6 +38,12 @@ namespace SquenceMange.Views
                                   MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
+                if (string.IsNullOrWhiteSpace(txtMachineKind.Text))
+                {
+                    MessageBox.Show("机型不能为空", "验证错误",
+                                  MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
 
                 ////检查序列号格式
                 //if (!txtSequenceNo.Text.Contains('-'))
@@ -47,14 +53,14 @@ namespace SquenceMange.Views
                 //    return;
                 //}
 
-                string materialId = txtMaterialId.Text.Trim();
+                string sequenceNo = txtSequenceNoStart.Text.Trim();
 
                 // 第二步：业务层重复性检查（防止绕过前端提交重复数据）
                 using (var service = new TagService())
                 {
-                    if (service.MaterialIdExists(materialId))
+                    if (service.SequenceExists(sequenceNo))
                     {
-                        MessageBox.Show($"料号 {materialId} 已存在", "验证失败",
+                        MessageBox.Show($"序列号 {sequenceNo} 已存在", "验证失败",
                                       MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
@@ -74,7 +80,7 @@ namespace SquenceMange.Views
                     BatchNo = txtBatchNo.Text?.Trim(),
                     BatchCount = txtBatchCount.Text?.Trim(),
                     Version = txtVersion.Text?.Trim(),
-                    MaterialId = materialId,
+                    MaterialId = txtMaterialId.Text?.Trim(),
                     SequenceNoStart = txtSequenceNoStart.Text?.Trim(),
                     SequenceNoEnd = txtSequenceNoEnd.Text?.Trim(),
                     ModelAddress = txtModelAddress.Text?.Trim(),

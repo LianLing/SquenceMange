@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SquenceMange.DataBase;
-using SquenceMange.Models;
+using SequenceMange.DataBase;
+using SequenceMange.Models;
 
-namespace SquenceMange.Service
+namespace SequenceMange.Service
 {
     public class SequenceService :IDisposable
     {

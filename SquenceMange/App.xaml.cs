@@ -1,8 +1,8 @@
 ﻿using System.Windows;
-using SquenceMange.Service;
-using SquenceMange.Views;
+using SequenceMange.Service;
+using SequenceMange.Views;
 
-namespace SquenceMange
+namespace SequenceMange
 {
     public partial class App : Application
     {

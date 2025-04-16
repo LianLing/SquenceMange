@@ -1,15 +1,15 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using SquenceMange.Models;
+using SequenceMange.Models;
 using System.Collections.ObjectModel;
-using SquenceMange.Service;
+using SequenceMange.Service;
 using SqlSugar;
-using SquenceMange.DataBase;
+using SequenceMange.DataBase;
 using System.Windows.Threading;
 using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 
-namespace SquenceMange.Views
+namespace SequenceMange.Views
 {
     public partial class CreateSequencePage : Page
     {
@@ -153,9 +153,9 @@ namespace SquenceMange.Views
 
                 using (var service = new TagService())
                 {
-                    if (!service.CheckRepeatMaterial(changedItem.MaterialId, changedItem.Id))
+                    if (!service.CheckRepeatSequenceNoStart(changedItem.SequenceNoStart, changedItem.Id))
                     {
-                        MessageBox.Show($"料号 {changedItem.MaterialId} 已存在", "验证失败",
+                        MessageBox.Show($"料号 {changedItem.SequenceNoStart} 已存在", "验证失败",
                                       MessageBoxButton.OK, MessageBoxImage.Error);
                         LoadData();
                         return;
