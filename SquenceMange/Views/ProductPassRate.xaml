@@ -15,41 +15,47 @@
                 <!-- 机型 -->
                 <StackPanel Margin="5,0">
                     <TextBlock Text="机型" Margin="0 0 0 2"/>
-                    <ComboBox Width="100" Height="26" FontSize="14"
+                    <ComboBox x:Name="prod_type" Width="120" Height="26" FontSize="14"
                                   BorderBrush="#FFCCCCCC" SelectedIndex="0"
-                                  IsEditable="True" DataContextChanged="ModelComboBox_TextChanged"
-                                  ItemsSource="{Binding MachineKind}">
+                                  IsEditable="True" Loaded="ModelComboBox_Loaded"
+                                  ItemsSource="{Binding allMachineKind}"
+                              SelectedItem="MachineKindSingle" SelectionChanged="MachineSelectChanged">
                     </ComboBox>
                 </StackPanel>
 
                 <!-- 模组 -->
                 <StackPanel Margin="10,0">
                     <TextBlock Text="模组" Margin="0 0 0 2"/>
-                    <ComboBox Width="100" Height="26" FontSize="14"
-                                  BorderBrush="#FFCCCCCC" SelectedIndex="0" ItemsSource="{Binding Modules}">
+                    <ComboBox x:Name="prod_module" Width="120" Height="26" FontSize="14"
+                                  BorderBrush="#FFCCCCCC" SelectedIndex="0" 
+                              ItemsSource="{Binding Modules}" SelectedItem="ModuleSingle" SelectionChanged="prod_module_SelectionChanged">
                     </ComboBox>
                 </StackPanel>
 
                 <!-- 工艺 -->
                 <StackPanel Margin="10,0">
                     <TextBlock Text="工艺" Margin="0 0 0 2"/>
-                    <ComboBox Width="100" Height="26" FontSize="14"
-                                  BorderBrush="#FFCCCCCC" SelectedIndex="0" ItemsSource="{Binding Processes}">
+                    <ComboBox x:Name="prod_model" Width="120" Height="26" FontSize="14"
+                                  BorderBrush="#FFCCCCAA" SelectedIndex="0" 
+                              ItemsSource="{Binding Processes}" SelectedItem="processSingle" SelectionChanged="prod_model_SelectionChanged">
                     </ComboBox>
                 </StackPanel>
 
                 <!-- 工单 -->
                 <StackPanel Margin="10,0">
                     <TextBlock Text="工单" Margin="0 0 0 2"/>
-                    <TextBox Width="120" Height="26" FontSize="14"
-                                 BorderBrush="#FFCCCCCC" x:Name="partNo"/>
+                    <ComboBox x:Name="mo" Width="120" Height="26" FontSize="14"
+                            BorderBrush="#FFCCCCCC" SelectedIndex="0"
+                            IsEditable="True"
+                            ItemsSource="{Binding AllMo}" Loaded="mo_Loaded">
+                    </ComboBox>
                 </StackPanel>
 
                 <!-- 班组 -->
                 <StackPanel Margin="10,0">
                     <TextBlock Text="班组" Margin="0 0 0 2"/>
-                    <ComboBox Width="100" Height="26" FontSize="14"
-                                  BorderBrush="#FFCCCCCC" SelectedIndex="0" ItemsSource="{Binding Teams}">
+                    <ComboBox x:Name="team" Width="100" Height="26" FontSize="14"
+                                  BorderBrush="#FFCCCCFF" SelectedIndex="0" ItemsSource="{Binding Teams}">
                     </ComboBox>
                 </StackPanel>
 
@@ -58,7 +64,7 @@
                 </StackPanel>
                 <!-- 查询按钮 -->
                 <Button Content="查询" Margin="20,0,0,0" Padding="20,5"
-                            Background="#FF0078D7" Foreground="White"
+                            Background="#FFCCCCCC" Foreground="White"
                             FontWeight="Bold" Click="QueryButton_Click"/>
             </StackPanel>
         </Border>
@@ -75,7 +81,7 @@
                         BorderBrush="#FFCCCCCC" BorderThickness="1">
                 <StackPanel Margin="10">
                     <TextBlock Text="站点" FontWeight="Bold" Margin="0,0,0,10"/>
-                    <ItemsControl ItemsSource="{Binding Stations}">
+                    <ItemsControl ItemsSource="{Binding Stations}" Height="941">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <CheckBox Content="{Binding Name}" 
@@ -86,7 +92,7 @@
                                             <Style.Triggers>
                                                 <Trigger Property="IsChecked" Value="True">
                                                     <Setter Property="Background" Value="#FF0078D7"/>
-                                                    <Setter Property="Foreground" Value="White"/>
+                                                    <Setter Property="Foreground" Value="#FF0078D7"/>
                                                 </Trigger>
                                             </Style.Triggers>
                                         </Style>
@@ -101,8 +107,44 @@
             <!-- 数据区域 -->
             <Border Grid.Column="1" Margin="10,0,0,0" Background="White"
                         BorderBrush="#FFCCCCCC" BorderThickness="1">
-                <TextBlock Text="数据" Foreground="#FF888888" FontSize="24"
-                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <!-- 数据表格 -->
+                <DataGrid Grid.Row="1" 
+          x:Name="tagsDataGrid"
+          AutoGenerateColumns="False"
+          CanUserAddRows="False"
+          SelectionMode="Single"
+          SelectionUnit="FullRow"
+          RowHeight="25"
+          FontSize="15"
+          ItemsSource="{Binding TagsList}"
+          SelectedItem="{Binding TagsListSingle}"
+          SelectionChanged="ShowLatestData"
+          Margin="0,0,0,206" Grid.RowSpan="2">
+                    <DataGrid.Resources>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="Height" Value="30"/>
+                        </Style>
+                    </DataGrid.Resources>
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="机型" Binding="{Binding prod_type}" Width="Auto"/>
+                        <DataGridTextColumn Header="模组" Binding="{Binding prod_module}" Width="Auto"/>
+                        <DataGridTextColumn Header="工艺" Binding="{Binding prod_model}" Width="Auto"/>
+                        <DataGridTextColumn Header="站点" Binding="{Binding prod_station}" Width="Auto"/>
+                        <DataGridTextColumn Header="工单" Binding="{Binding mo}" Width="Auto"/>
+                        <DataGridTextColumn Header="班组" Binding="{Binding prod_team}" Width="Auto"/>
+                        <DataGridTextColumn Header="直通率" Binding="{Binding pass_rate}" Width="Auto"/>
+                        <!--<DataGridTextColumn Header="时间" 
+           Binding="{Binding finished_stamp, StringFormat=yyyy-MM-dd HH:mm:ss}" 
+           Width="Auto"/>-->
+                    </DataGrid.Columns>
+
+                </DataGrid>
+
+
             </Border>
         </Grid>
     </Grid>

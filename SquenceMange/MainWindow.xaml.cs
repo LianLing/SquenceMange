@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SequenceManage.Views;
 
 namespace SequenceMange.Views
 {
@@ -81,6 +82,12 @@ namespace SequenceMange.Views
         private void EditSequenceRule_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void QueryRecords_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Maximized;          // 最大化窗口
+            mainFrame.Navigate(new ProductPassRate());
         }
     }
 }

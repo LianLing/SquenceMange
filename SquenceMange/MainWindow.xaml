@@ -15,6 +15,9 @@
                 <MenuItem Header="生成序列号" Click="GenerateSerialNumber_Click"/>
                 <MenuItem Header="序列号规则维护" Click="EditSequenceRule_Click"/>
             </MenuItem>
+            <MenuItem Header="报表" Height="26" Width="60" Margin="3,0" >
+                <MenuItem Header="直通率" Click="QueryRecords_Click"/>
+            </MenuItem>
         </Menu>
 
         <!-- 其他界面内容 -->
