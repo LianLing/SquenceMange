@@ -25,7 +25,9 @@ namespace SequenceMange.Models
         //班组
         public string prod_team { get; set; }
         //时间
-        public string finished_stamp { get; set; }
+        public DateTime? finished_stamp { get; set; }
+        //直通率
+        public string pass_rate { get; set; }
 
     }
 }

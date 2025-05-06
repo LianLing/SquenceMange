@@ -105,21 +105,21 @@
             </Border>
 
             <!-- 数据区域 -->
+            
             <Border Grid.Column="1" Margin="10,0,0,0" Background="White"
                         BorderBrush="#FFCCCCCC" BorderThickness="1">
                 <!-- 数据表格 -->
                 <DataGrid Grid.Row="1" 
-          x:Name="tagsDataGrid"
-          AutoGenerateColumns="False"
-          CanUserAddRows="False"
-          SelectionMode="Single"
-          SelectionUnit="FullRow"
-          RowHeight="25"
-          FontSize="15"
-          ItemsSource="{Binding TagsList}"
-          SelectedItem="{Binding TagsListSingle}"
-          SelectionChanged="ShowLatestData"
-          Margin="0,0,0,206" Grid.RowSpan="2">
+              x:Name="rateDataGrid"
+              AutoGenerateColumns="False"
+              CanUserAddRows="False"
+              SelectionMode="Single"
+              SelectionUnit="FullRow"
+              RowHeight="25"
+              FontSize="15"
+              ItemsSource="{Binding RateList}"
+              SelectedItem="{Binding RateListSingle}"
+              Margin="0,0,0,206" Grid.RowSpan="2">  
                     <DataGrid.Resources>
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="HorizontalContentAlignment" Value="Center"/>

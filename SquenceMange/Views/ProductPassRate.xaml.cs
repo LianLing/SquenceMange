@@ -28,6 +28,9 @@ namespace SequenceManage.Views
         public ObservableCollection<string> allMachineKind { get; set; } = new ObservableCollection<string>();
         //工单
         public ObservableCollection<string> AllMo {  get; set; } = new ObservableCollection<string> { };
+
+        //表单
+        public ObservableCollection<ProductPassRateModel> RateList { get; set; } = new ObservableCollection<ProductPassRateModel> { };
         TableService tableService = new TableService();
         ProductPassRateModel rateModel = new ProductPassRateModel();
         private TextBox _comboBoxTextBox;
@@ -47,10 +50,11 @@ namespace SequenceManage.Views
             var result = await tableService.QueryMachineKind();
             forechAdd(result, allMachineKind);
             //初始化工单信息
-            var allMo = await tableService.QueryAllMoAsync();
+            var allMo = await tableService.QueryAllMoAsync(prod_type.SelectedItem.ToString());
             forechAdd(allMo, AllMo);
             //初始化班组信息
             var allTeam = await tableService.QueryAllTeam();
+            Teams.Add("");
             forechAdd(allTeam, Teams);
         }
 
@@ -64,26 +68,40 @@ namespace SequenceManage.Views
 
         private void QueryButton_Click(object sender, RoutedEventArgs e)
         {
+            string stationstr = "(";
             var selectedStations = Stations.Where(s => s.IsChecked)
                                            .Select(s => s.Name)
                                            .ToList();
-
-            // 构建查询参数对象
-            var queryParams = new
+            if (selectedStations.Count == 0)
             {
-                Model = prod_type.SelectedItem?.ToString(),
-                Module = prod_module.SelectedItem?.ToString(),
-                Process = prod_model.SelectedItem?.ToString(),
-                Mo = mo.SelectedItem?.ToString(),
-                Datetime = datePick.SelectedDateFormat,
-                Team = team.SelectedItem?.ToString(),
-                Stations = selectedStations
+                throw new Exception("未选择站点");
+            }
+            if (selectedStations.Count != 0)
+            {
+                foreach (var item in selectedStations)
+                {
+                    stationstr = stationstr+"'" +item +"',";
+                }
+                stationstr = stationstr.Substring(0, stationstr.Length - 1)+")";
+            }
+            // 构建查询参数对象
+            ProductPassRateModel passRateModel = new ProductPassRateModel()
+            {
+                prod_type = prod_type.SelectedItem?.ToString(),
+                prod_module = prod_module.SelectedItem?.ToString(),
+                prod_model = prod_model.SelectedItem?.ToString(),
+                mo = mo.SelectedItem?.ToString(),
+                finished_stamp = datePick.SelectedDate,
+                prod_team = team.SelectedItem?.ToString(),
+                prod_station = stationstr,
+                pass_rate = "0"
             };
 
-            TableService.QueryPassRate();
-
-            // TODO: 调用数据服务获取结果
-            MessageBox.Show($"执行查询：{queryParams}");
+            var list = tableService.QueryPassRate(passRateModel);
+            foreach (var item in list)
+            {
+                RateList.Add(item);
+            }
         }
 
       
@@ -166,9 +184,10 @@ namespace SequenceManage.Views
                
         }
 
-        private void prod_model_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void prod_model_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Stations.Clear();
+            AllMo.Clear();
             if (prod_type.SelectedItem != null && prod_module.SelectedItem != null && prod_model.SelectedItem != null)
             {
                 //查询站点数据
@@ -180,6 +199,15 @@ namespace SequenceManage.Views
                     Stations.Add(checkBoxItem);
                 }
             }
+            //初始化工单信息
+            if (prod_type.SelectedItem != null)
+            {
+                var allMo = await tableService.QueryAllMoAsync(prod_type.SelectedItem.ToString());
+                if (allMo != null)
+                {
+                    forechAdd(allMo, AllMo);
+                }
+            } 
         }
 
         private void mo_Loaded(object sender, RoutedEventArgs e)
