@@ -166,14 +166,13 @@ namespace SequenceMange.Service
                 foreach (var sn in list)
                 {
                     //当前工单，该SN共有过站记录数量
-                    string sql3 = $@"select count(1) from prod_test_rcds t where t.mo = '{passRateModel.mo}' and t.sn = '{sn}' and t.station_curr in {passRateModel.prod_station}";
+                    string sql3 = $@"select count(1) from prod_test_rcds t where t.mo = '{passRateModel.mo}' and t.sn = '{sn}' and t.model_curr = '{passRateModel.prod_model}' and t.station_curr in {passRateModel.prod_station}";
                     int allsn = sqlServerDb.Ado.SqlQuerySingle<int>(sql3);
                     //当前SN过站PASS数量
-                    string sql4 = $@"select count(1) from prod_test_rcds t where t.mo = '{passRateModel.mo}' and t.sn = '{sn}' and t.`status` = 1 and t.tst_rlt >= 0 and t.station_curr in {passRateModel.prod_station}";
+                    string sql4 = $@"select count(1) from prod_test_rcds t where t.mo = '{passRateModel.mo}' and t.sn = '{sn}' and t.model_curr = '{passRateModel.prod_model}' and t.`status` = 1 and t.tst_rlt >= 0 and t.station_curr in {passRateModel.prod_station}";
                     int allPass = sqlServerDb.Ado.SqlQuerySingle<int>(sql4);
                     if (allPass == allsn)
                         PassOK++;
-                    
                 }
                 passRateModel.pass_rate = (PassOK * 1.00 / allQuantity * 100).ToString("0") + '%';
                 infoList.Add(passRateModel);

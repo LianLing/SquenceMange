@@ -65,7 +65,11 @@
                 <!-- 查询按钮 -->
                 <Button Content="查询" Margin="20,0,0,0" Padding="20,5"
                             Background="#FFCCCCCC" Foreground="White"
-                            FontWeight="Bold" Click="QueryButton_Click"/>
+                            FontWeight="Bold" Click="QueryButton_Click" Height="35"/>
+
+                <Button Content="导出" Margin="30,0,0,0" Padding="20,5"
+                            Background="#FFCCCCCC" Foreground="White"
+                            FontWeight="Bold" Click="ExportButton_Click" Height="35"/>
             </StackPanel>
         </Border>
 
@@ -105,46 +109,46 @@
             </Border>
 
             <!-- 数据区域 -->
-            
+
             <Border Grid.Column="1" Margin="10,0,0,0" Background="White"
-                        BorderBrush="#FFCCCCCC" BorderThickness="1">
-                <!-- 数据表格 -->
-                <DataGrid Grid.Row="1" 
-              x:Name="rateDataGrid"
-              AutoGenerateColumns="False"
-              CanUserAddRows="False"
-              SelectionMode="Single"
-              SelectionUnit="FullRow"
-              RowHeight="25"
-              FontSize="15"
-              ItemsSource="{Binding RateList}"
-              SelectedItem="{Binding RateListSingle}"
-              Margin="0,0,0,206" Grid.RowSpan="2">  
-                    <DataGrid.Resources>
-                        <Style TargetType="DataGridColumnHeader">
-                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                            <Setter Property="FontWeight" Value="Bold"/>
-                            <Setter Property="Height" Value="30"/>
-                        </Style>
-                    </DataGrid.Resources>
+        BorderBrush="#FFCCCCCC" BorderThickness="1">
+                <!-- 添加滚动容器 -->
+                <ScrollViewer VerticalScrollBarVisibility="Auto" 
+                  HorizontalScrollBarVisibility="Auto"
+                  Padding="0">
+                    <!-- 数据表格 -->
+                    <DataGrid Grid.Row="1" 
+                x:Name="rateDataGrid"
+                AutoGenerateColumns="False"
+                CanUserAddRows="False"
+                SelectionMode="Single"
+                SelectionUnit="FullRow"
+                RowHeight="25"
+                FontSize="15"
+                ItemsSource="{Binding RateList}"
+                SelectedItem="{Binding RateListSingle}"
+                Margin="0,0,0,0">
+                        <!-- 移除底部margin -->
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="Height" Value="30"/>
+                            </Style>
+                        </DataGrid.Resources>
 
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="机型" Binding="{Binding prod_type}" Width="Auto"/>
-                        <DataGridTextColumn Header="模组" Binding="{Binding prod_module}" Width="Auto"/>
-                        <DataGridTextColumn Header="工艺" Binding="{Binding prod_model}" Width="Auto"/>
-                        <DataGridTextColumn Header="站点" Binding="{Binding prod_station}" Width="Auto"/>
-                        <DataGridTextColumn Header="工单" Binding="{Binding mo}" Width="Auto"/>
-                        <DataGridTextColumn Header="班组" Binding="{Binding prod_team}" Width="Auto"/>
-                        <DataGridTextColumn Header="直通率" Binding="{Binding pass_rate}" Width="Auto"/>
-                        <!--<DataGridTextColumn Header="时间" 
-           Binding="{Binding finished_stamp, StringFormat=yyyy-MM-dd HH:mm:ss}" 
-           Width="Auto"/>-->
-                    </DataGrid.Columns>
-
-                </DataGrid>
-
-
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="机型" Binding="{Binding prod_type}" Width="Auto"/>
+                            <DataGridTextColumn Header="模组" Binding="{Binding prod_module}" Width="Auto"/>
+                            <DataGridTextColumn Header="工艺" Binding="{Binding prod_model}" Width="Auto"/>
+                            <DataGridTextColumn Header="站点" Binding="{Binding prod_station}" Width="Auto"/>
+                            <DataGridTextColumn Header="工单" Binding="{Binding mo}" Width="Auto"/>
+                            <DataGridTextColumn Header="班组" Binding="{Binding prod_team}" Width="Auto"/>
+                            <DataGridTextColumn Header="直通率" Binding="{Binding pass_rate}" Width="Auto"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </ScrollViewer>
             </Border>
         </Grid>
     </Grid>

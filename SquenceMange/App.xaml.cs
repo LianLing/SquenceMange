@@ -8,6 +8,7 @@ namespace SequenceMange
     {
         public NavigationService NavigationService { get; private set; }
 
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
