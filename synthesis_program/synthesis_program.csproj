@@ -31,6 +31,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="HtsCommon">
+      <HintPath>bin\Debug\net8.0-windows7.0\HtsCommon.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Assets\logo1.ico">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>

@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SequenceManage.Views;
+using synthesis_program.Tools;
 
 namespace SequenceMange.Views
 {
